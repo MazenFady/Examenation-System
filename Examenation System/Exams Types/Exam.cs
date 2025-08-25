@@ -8,19 +8,15 @@ namespace Examenation_System.Exams_Types
 {
     public abstract class Exam
     {
-        private int Time { get; set; }
-        private int NumberOfQustion { get; set; }
-        public Question[] Qustions { get; set; }
-
-        public int GetTime()
+        public DateTime StartExam { get; set; }
+        public int NemberOfQuestions { get; set; }
+        public Question[] Questions { get; set; }
+        public Exam(DateTime startExam, int nemberOfQuestions, Question[] questions)
         {
-            return this.Time;
-        }
-        public void SetTime(int time)
-        {
-            this.Time = time;
+            StartExam = startExam;
+            NemberOfQuestions = nemberOfQuestions;
+            Questions = questions;
         }
         public abstract void ShowExam();
-
     }
 }

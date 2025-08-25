@@ -9,38 +9,22 @@ namespace Examenation_System
 {
     public abstract class Question
     {
-        public string Header { get; set; }
-        public string Body { get; set; }
+        public string HeaderOfQusetion { get; set; }
+        public string BodyOfQusetion { get; set; }
         public float Mark { get; set; }
-        public Answer[] ListAnswer { get; set; }
-        public int RightAnswer { get; set; }
+        public Answer[] AnswersList { get; set; }
+        public Answer RightAnswer { get; set; }
+        public Answer? UserAnswer { get; set; }
 
-        protected Question(string header, string body, float mark)
+        public Question(string headerOfQusetion, string bodyOfQusetion, float mark, Answer[] answersList, Answer rightAnswer)
         {
-            Header = header;
-            Body = body;
+            HeaderOfQusetion = headerOfQusetion;
+            BodyOfQusetion = bodyOfQusetion;
             Mark = mark;
+            AnswersList = answersList;
+            RightAnswer = rightAnswer;
         }
 
-        public virtual object Clone()
-        {
-            var cloned = (Question)MemberwiseClone();
-            if (ListAnswer != null)
-            {
-                var arr = new Answer[ListAnswer.Length];
-                for (int i = 0; i < ListAnswer.Length; i++)
-                    arr[i] = (Answer)ListAnswer[i].Clone();
-                cloned.ListAnswer = arr;
-            }
-            return cloned;
-        }
-
-        public abstract void ShowQuestion();
-        public override string ToString()
-        {
-            return $"{Header} - Mark: {Mark}";
-        }
-
-
+        public abstract void ShowQustion();
     }
 }

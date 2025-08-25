@@ -8,23 +8,48 @@ namespace Examenation_System.Type_of_Question
 {
     internal class TrueOrFlase : Question
     {
-        public TrueOrFlase(string header, string body, float mark, bool correctTrue)
-            : base(header, body, mark)
+        public TrueOrFlase(string headerOfQusetion, string bodyOfQusetion, float mark, Answer[] answersList, Answer rightAnswer)
+        : base(headerOfQusetion, bodyOfQusetion, mark, answersList, rightAnswer)
         {
-            ListAnswer = new Answer[]
+        }
+        public static TrueOrFlase CreateTFQuestion(int qNum)
+        {
+            Console.WriteLine($"--- Question {qNum} (True||False) ---");
+
+            Console.Write("Question body: ");
+            string? body = Console.ReadLine();
+
+            float mark;
+            do
             {
-                new Answer(0, "False"),
-                new Answer(1, "True")
+                Console.Write("Enter mark of question: ");
+
+            } while (!float.TryParse(Console.ReadLine(), out mark) || mark < 0);
+
+            Answer[] answers =
+            {
+                new Answer(1, "True"),
+                new Answer(2, "False")
             };
-            RightAnswer = correctTrue ? 1 : 0;
+
+            int correctIndex;
+            do
+            {
+                Console.Write("Enter number of correct answer [ 1)True | 2)False ]: ");
+            } while (!int.TryParse(Console.ReadLine(), out correctIndex) || correctIndex < 1 || correctIndex > 2);
+
+            Answer rightAnswer = answers[correctIndex - 1];
+
+            return new TrueOrFlase("True/False", body, mark, answers, rightAnswer);
         }
 
-        public override void ShowQuestion()
+        public override void ShowQustion()
         {
-            Console.WriteLine(Header);
-            Console.WriteLine(Body);
-            Console.WriteLine("  0. False");
-            Console.WriteLine("  1. True");
+            Console.WriteLine($"{HeaderOfQusetion}: {BodyOfQusetion}  (Mark: {Mark})");
+            foreach (var ans in AnswersList)
+            {
+                Console.WriteLine($"{ans.AnswerID}. {ans.AnswerText}");
+            }
         }
     }
 }

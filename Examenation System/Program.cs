@@ -6,7 +6,10 @@ namespace Examenation_System
     {
         static void Main(string[] args)
         {
-            MCQ mcq1 = new MCQ();
+            Subject subject = new Subject("101", "OOP");
+            subject.CreatelExam();
+            Console.WriteLine($"------------Examination Form------------\nSubject Name: {subject.SubjectName} \n Subject ID: {subject.SubjectID} ");
+            subject.StartExam();
         }
     }
 }

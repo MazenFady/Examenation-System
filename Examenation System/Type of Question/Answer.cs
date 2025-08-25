@@ -6,23 +6,14 @@ using System.Threading.Tasks;
 
 namespace Examenation_System.Type_of_Question
 {
-    public abstract class Answer : ICloneable
+    public class Answer 
     {
-        public int AnswerId { get; set; }
-        public String AnswerText { get; set; }
-
-        public Answer(int id, string text)
+        public int AnswerID { get; set; }
+        public string AnswerText { get; set; }
+        public Answer(int answerID, string answerText)
         {
-            AnswerId = id;
-            AnswerText = text;
-        }
-        public object Clone()
-        {
-            return new Answer(AnswerId, AnswerText);
-        }
-        public override string ToString()
-        {
-            return $"[{AnswerId}] {AnswerText}";
+            AnswerID = answerID;
+            AnswerText = answerText;
         }
     }
 }

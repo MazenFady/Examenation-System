@@ -8,37 +8,49 @@ namespace Examenation_System.Type_of_Question
 {
     internal class MCQ : Question
     {
-        public MCQ(string header, string body, float mark, Answer[] answers, int rightIndex)
-         : base(header, body, mark)
+        public MCQ(string headerOfQusetion, string bodyOfQusetion, float mark, Answer[] answersList, Answer rightAnswer) 
+        : base(headerOfQusetion, bodyOfQusetion, mark, answersList, rightAnswer)
         {
-            ListAnswer = answers ?? Array.Empty<Answer>();
-            RightAnswer = rightIndex;
         }
-        public override void ShowQuestion()
+        public MCQ CreateMCQQustion(int qNum)
         {
-            Console.WriteLine(Header);
-            Console.WriteLine(Body);
-            if (ListAnswer != null)
+            Console.WriteLine($"--------Qustion {qNum} - (MCQ)--------");
+            string body = "";
+            do
             {
-                for (int i = 0; i < ListAnswer.Length; i++)
-                    Console.WriteLine($"  {i}. {ListAnswer[i].AnswerText}");
+                Console.WriteLine("Qustion body : ");
+                body = Console.ReadLine();
+            } while (string.IsNullOrWhiteSpace(body));
+            Console.WriteLine("------------------------");
+            Answer[] answers = new Answer[3];
+            for (int i = 0; i < 3; i++)
+            {
+                string text = "";
+                do
+                {
+                    Console.Write($"Enter choice {i + 1} : ");
+                    text = Console.ReadLine();
+                } while (string.IsNullOrWhiteSpace(text));
+                answers[i] = new Answer(i + 1, text);
+                Console.WriteLine();
             }
+            Console.Write("Number of right answer: ");
+            int correctIndex;
+            while (!int.TryParse(Console.ReadLine(), out correctIndex) || correctIndex < 1 || correctIndex > 3) ;
+            Answer rightAnswer = answers[correctIndex - 1];
+
+            float mark;
+            do
+            {
+                Console.Write("Mark of qustion = ");
+            } while (!float.TryParse(Console.ReadLine(), out mark) || mark < 0);
+            return new MCQ("MCQ", body, mark, answers, rightAnswer);
         }
-        //public MCQ()
-        //{
-        //    Console.WriteLine("MCQ qustion : ");
-        //    Console.WriteLine("--------------------");
-
-        //    Console.Write("Enter the qustion : ");
-        //    string qustion =Console.ReadLine();
-
-        //    Console.WriteLine();
-        //    float mark;
-        //    do
-        //    {
-        //        Console.Write("Enter Mark of this qustion : ");
-        //    } while (!float.TryParse(Console.ReadLine(), out mark) && mark>-1);
-
-        //}
+        public override void ShowQustion()
+        {
+            Console.Write($"{HeaderOfQusetion}: {BodyOfQusetion}   (Mark: {Mark})");
+            foreach (var ans in AnswersList)
+                Console.WriteLine($"{ans.AnswerID}) {ans.AnswerText}");
+        }
     }
 }
